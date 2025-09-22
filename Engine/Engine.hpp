@@ -23,8 +23,6 @@ public:
 
 	void Run();
 	void OnClose();
-
-	void DrawTriangle();
 };
 
 }
