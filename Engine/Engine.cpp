@@ -1,5 +1,9 @@
 #include "Exception.hpp"
 #include "Engine.hpp"
+#include <d3dcompiler.h>
+
+#pragma comment(lib, "d3d11.lib")
+#pragma comment(lib, "D3DCompiler.lib")
 
 #define RELEASE(X) if (X != nullptr) X->Release()
 
@@ -34,10 +38,10 @@ Engine::Engine() : Window(L"Engine", 1600, 900),
                                   D3D11_SDK_VERSION, &swapChainDesc, &m_swapChain, &m_device,
                                   nullptr, &m_context);
 
-    /*ID3D11Resource* backBuffer = nullptr;
+    ID3D11Resource* backBuffer = nullptr;
     m_swapChain->GetBuffer(0, __uuidof(ID3D11Resource), reinterpret_cast<void**>(&backBuffer));
     m_device->CreateRenderTargetView(backBuffer, nullptr, &m_target);
-    RELEASE(backBuffer);*/
+    RELEASE(backBuffer);
 
     m_isOpen = true;
 }
@@ -54,10 +58,50 @@ void Engine::Run()
 {
     while (m_isOpen)
     {
+        DrawTriangle();
+        InvalidateRgn(m_hWnd, nullptr, TRUE);
         WaitMessage();
     }
 }
 
 void Engine::OnClose() { m_isOpen = false; }
+
+void Engine::DrawTriangle()
+{
+    const float verticies[] =
+    {
+        0.0f, 0.5f,
+        0.5f, -0.5f,
+        -0.5f, -0.5f
+    };
+
+    ID3D11Buffer* vertexBuffer = nullptr;
+    D3D11_BUFFER_DESC vertexBufferDesc =
+    {
+        .ByteWidth = sizeof(verticies),
+        .Usage = D3D11_USAGE_DEFAULT,
+        .BindFlags = D3D11_BIND_VERTEX_BUFFER,
+        .CPUAccessFlags = 0,
+        .MiscFlags = 0,
+        .StructureByteStride = sizeof(float),
+    };
+    D3D11_SUBRESOURCE_DATA vertexBufferData = 
+    {
+        .pSysMem = verticies,
+    };
+    UINT stride = sizeof(float);
+    UINT offset = 0;
+    
+    ID3D11VertexShader* vertexShader;
+    ID3DBlob* vertexShaderBlob;
+    D3DReadFileToBlob(L"VertexShader.cso", &vertexShaderBlob);
+    m_device->CreateVertexShader(vertexShaderBlob->GetBufferPointer(), vertexShaderBlob->GetBufferSize(), nullptr, &vertexShader);
+
+    m_context->VSSetShader(vertexShader, nullptr, 0);
+
+    m_device->CreateBuffer(&vertexBufferDesc, &vertexBufferData, &vertexBuffer);
+    m_context->IAGetVertexBuffers(0, 1, &vertexBuffer, &stride, &offset);
+    m_context->Draw(3, 0);
+}
 
 }

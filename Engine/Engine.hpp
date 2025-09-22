@@ -4,8 +4,6 @@
 #include <d3d11.h>
 #include <dxgi1_6.h>
 
-#pragma comment(lib, "d3d11.lib")
-
 namespace Engine
 {
 
@@ -25,6 +23,8 @@ public:
 
 	void Run();
 	void OnClose();
+
+	void DrawTriangle();
 };
 
 }
