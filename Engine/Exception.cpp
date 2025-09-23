@@ -1,6 +1,5 @@
 #include "Exception.hpp"
-#include <d3d11.h>
-#include <windows.h>
+#include <Windows.h>
 
 namespace Engine
 {

@@ -138,6 +138,10 @@
     <ClCompile Include="Engine.cpp" />
     <ClCompile Include="Exception.cpp" />
     <ClCompile Include="Main.cpp" />
+    <ClCompile Include="Window.cpp">
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|x64'">true</ExcludedFromBuild>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Engine.hpp" />

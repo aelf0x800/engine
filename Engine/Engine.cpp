@@ -1,9 +1,5 @@
-#include "Exception.hpp"
 #include "Engine.hpp"
-#include <d3dcompiler.h>
-
-#pragma comment(lib, "d3d12.lib")
-#pragma comment(lib, "D3DCompiler.lib")
+#include "Exception.hpp"
 
 #define TRY(X) if (FAILED(X)) throw DirectXException();
 #define RELEASE(X) if (X != nullptr) X->Release()
@@ -53,8 +49,7 @@ Engine::Engine() : Window(L"Engine", 1600, 900),
 
 Engine::~Engine()
 {
-    RELEASE(m_target);
-    RELEASE(m_context);
+    RELEASE(m_commandList);
     RELEASE(m_swapChain);
     RELEASE(m_device);
 }
