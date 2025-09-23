@@ -47,8 +47,8 @@ Engine::Engine() : Window(L"Engine", 1600, 900),
     };
 
     TRY(D3D11CreateDeviceAndSwapChain(nullptr, D3D_DRIVER_TYPE_HARDWARE, nullptr, 0, nullptr, 0,
-                                  D3D11_SDK_VERSION, &swapChainDesc, &m_swapChain, &m_device,
-                                  nullptr, &m_context));
+                                      D3D11_SDK_VERSION, &swapChainDesc, &m_swapChain, &m_device,
+                                      nullptr, &m_context));
     m_isOpen = true;
 }
 
