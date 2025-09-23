@@ -1,4 +1,5 @@
 #include "Exception.hpp"
+#include <d3d11.h>
 #include <windows.h>
 
 namespace Engine
@@ -30,7 +31,6 @@ WindowException::WindowException()
 
 DirectXException::DirectXException()
 {
-
 }
 
 }

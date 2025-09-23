@@ -2,7 +2,7 @@
 #include "Engine.hpp"
 #include <d3dcompiler.h>
 
-#pragma comment(lib, "d3d11.lib")
+#pragma comment(lib, "d3d12.lib")
 #pragma comment(lib, "D3DCompiler.lib")
 
 #define TRY(X) if (FAILED(X)) throw DirectXException();
@@ -14,8 +14,7 @@ namespace Engine
 Engine::Engine() : Window(L"Engine", 1600, 900),
                    m_device(nullptr),
                    m_swapChain(nullptr),
-                   m_context(nullptr),
-                   m_target(nullptr),
+                   m_commandList(nullptr),
                    m_isOpen(false)
 {
     DXGI_SWAP_CHAIN_DESC swapChainDesc =
@@ -46,9 +45,9 @@ Engine::Engine() : Window(L"Engine", 1600, 900),
         .Flags = 0
     };
 
-    TRY(D3D11CreateDeviceAndSwapChain(nullptr, D3D_DRIVER_TYPE_HARDWARE, nullptr, 0, nullptr, 0,
-                                      D3D11_SDK_VERSION, &swapChainDesc, &m_swapChain, &m_device,
-                                      nullptr, &m_context));
+    //TRY(D3D12CreateDeviceAndSwapChain(nullptr, D3D_DRIVER_TYPE_HARDWARE, nullptr, 0, nullptr, 0,
+    //                                  D3D11_SDK_VERSION, &swapChainDesc, &m_swapChain, &m_device,
+    //                                  nullptr, &m_context));
     m_isOpen = true;
 }
 
